@@ -1,0 +1,34 @@
+{
+  "name": "@paddek/qoi-image",
+  "version": "1.0.0",
+  "description": "Encoder and decoder for QOI the quite okay image format.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/"
+  },
+  "directories": {
+      "test": "tests"
+  },
+  "keywords": [
+      "qoi",
+      "qoi image"
+  ],
+  "author": "paddek",
+  "bugs": {
+      "url": "https://github.com/PaddeK/qoi-image/issues"
+  },
+  "homepage": "https://github.com/PaddeK/qoi-image#readme",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/PaddeK/qoi-image.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "./eslint.json"
+    ]
+  }
+}

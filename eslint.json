@@ -1,0 +1,93 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "env": {
+        "node": true,
+        "es2021": true,
+        "jest": true
+    },
+    "rules": {
+        "no-bitwise": "off",
+        "camelcase": "error",
+        "curly": "error",
+        "no-template-curly-in-string": "warn",
+        "object-curly-newline": [
+            "error",
+            {
+                "consistent": true
+            }
+        ],
+        "object-curly-spacing": ["error", "never"],
+        "template-curly-spacing": ["error", "never"],
+        "eqeqeq": ["error", "always"],
+        "guard-for-in": "error",
+        "wrap-iife": ["error", "any"],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1,
+                "VariableDeclarator": 1,
+                "outerIIFEBody": 1,
+                "MemberExpression": 1,
+                "FunctionDeclaration": {"body": 1, "parameters": 2},
+                "FunctionExpression": {"body": 1, "parameters": "first"},
+                "CallExpression": {"arguments": 1},
+                "ArrayExpression": 1,
+                "ObjectExpression": 1,
+                "ImportDeclaration": 1,
+                "flatTernaryExpressions": true
+            }
+        ],
+        "no-use-before-define": "error",
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "ignoreUrls": true,
+                "ignoreComments": true,
+                "ignoreRegExpLiterals": true
+            }
+        ],
+        "new-cap": [
+            "error",
+            {
+                "newIsCap": true,
+                "capIsNew": true,
+                "properties": true
+            }
+        ],
+        "new-parens": "error",
+        "no-caller": "error",
+        "no-empty": "error",
+        "quotes": [
+            "error",
+            "single",
+            {
+                "allowTemplateLiterals": true,
+                "avoidEscape": true
+            }
+        ],
+        "no-undef": [
+            "error",
+            {
+                "typeof": true
+            }
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": false
+            }
+        ],
+        "strict": ["error", "safe"],
+        "no-cond-assign": "error",
+        "no-console": "error",
+        "no-debugger": "error",
+        "no-alert": "error"
+    }
+}
