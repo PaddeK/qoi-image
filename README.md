@@ -5,7 +5,7 @@ on [Youtube](https://www.youtube.com/watch?v=GgsRQuGSrc0).
 # Reference
 QOI format [https://qoiformat.org/](https://qoiformat.org/) by [Dominic Szablewski](http://twitter.com/phoboslab).
 
-#Example
+# Example
 ```node
 'use strict';
 
