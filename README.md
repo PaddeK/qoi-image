@@ -29,15 +29,15 @@ const
 console.log(`Reference BIN hash: ${refBinHash}`);
 console.log(`Reference QOI hash: ${refQoiHash}`);
 
-console.log(`Encode hash: ${encodeHash}`, refQoiHash === encodeHash ? 'match' : 'no match');
-console.log(`Decode hash: ${decodeHash}`, refBinHash === decodeHash ? 'match' : 'no match');
+console.log(`Encode hash: ${encodeHash}`);
+console.log(`Decode hash: ${decodeHash}`);
 
 createReadStream(infile)
     .pipe(new EncodeStream(256, 256, 4, 1))
     .pipe(createHash('sha1').setEncoding('hex'))
     .on('finish', function() {
         const hash = this.read();
-        console.log(`EncodeStream hash: ${hash}`, refQoiHash === hash ? 'match' : 'no match');
+        console.log(`EncodeStream hash: ${hash}`);
     });
 
 createReadStream(outfile)
@@ -45,6 +45,6 @@ createReadStream(outfile)
     .pipe(createHash('sha1').setEncoding('hex'))
     .on('finish', function() {
         const hash = this.read();
-        console.log(`DecodeStream hash: ${hash}`, refBinHash === hash ? 'match' : 'no match');
+        console.log(`DecodeStream hash: ${hash}`);
     });
 ```
