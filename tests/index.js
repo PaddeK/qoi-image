@@ -3,24 +3,39 @@
 
 const
     {createHash} = require('crypto'),
-    {readFile} = require('fs/promises'),
+    {createReadStream, readFileSync} = require('fs'),
     {join} = require('path'),
-    Qoi = require('./../src');
+    {encode, decode, EncodeStream, DecodeStream} = require('./../src'),
+    filename = 'testcard_rgba',
+    infile = join(__dirname, '..', 'reference', `${filename}.bin`),
+    outfile = join(__dirname, '..', 'reference', `${filename}.qoi`),
+    binBuffer = readFileSync(infile),
+    qoiBuffer = readFileSync(outfile),
+    refBinHash = createHash('sha1').update(binBuffer).digest('hex'),
+    refQoiHash = createHash('sha1').update(qoiBuffer).digest('hex'),
+    encoded = encode(binBuffer, 256, 256, 4, 1),
+    decoded = decode(qoiBuffer),
+    encodeHash = createHash('sha1').update(encoded).digest('hex'),
+    decodeHash = createHash('sha1').update(decoded).digest('hex');
 
-(async () => {
-    const
-        filename = 'testcard_rgba',
-        binBuffer = await readFile(join(__dirname, '..', 'reference', `${filename}.bin`)),
-        qoiBuffer = await readFile(join(__dirname, '..', 'reference', `${filename}.qoi`)),
-        refBinHash = createHash('sha1').update(binBuffer).digest('hex'),
-        refQoiHash = createHash('sha1').update(qoiBuffer).digest('hex'),
-        qoiResult = Qoi.encode(binBuffer, 256, 256, 4, 1),
-        binResult = Qoi.decode(qoiBuffer),
-        testBinHash = createHash('sha1').update(binResult).digest('hex'),
-        testQoiHash = createHash('sha1').update(qoiResult).digest('hex');
+console.log(`Reference BIN hash: ${refBinHash}`);
+console.log(`Reference QOI hash: ${refQoiHash}`);
 
-    console.log(`Reference hash for ${filename}.bin:`, refBinHash);
-    console.log(`Reference hash for ${filename}.qoi:`, refQoiHash);
-    console.log(`Testing hash for ${filename}.bin:`, testBinHash, testBinHash === refBinHash ? 'match' : 'no match');
-    console.log(`Testing hash for ${filename}.qoi:`, testQoiHash, testQoiHash === refQoiHash ? 'match' : 'no match');
-})();
+console.log(`Encode hash: ${encodeHash}`, refQoiHash === encodeHash ? 'match' : 'no match');
+console.log(`Decode hash: ${decodeHash}`, refBinHash === decodeHash ? 'match' : 'no match');
+
+createReadStream(infile)
+    .pipe(new EncodeStream(256, 256, 4, 1))
+    .pipe(createHash('sha1').setEncoding('hex'))
+    .on('finish', function() {
+        const hash = this.read();
+        console.log(`EncodeStream hash: ${hash}`, refQoiHash === hash ? 'match' : 'no match');
+    });
+
+createReadStream(outfile)
+    .pipe(new DecodeStream())
+    .pipe(createHash('sha1').setEncoding('hex'))
+    .on('finish', function() {
+        const hash = this.read();
+        console.log(`DecodeStream hash: ${hash}`, refBinHash === hash ? 'match' : 'no match');
+    });
